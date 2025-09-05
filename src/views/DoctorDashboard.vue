@@ -4,12 +4,19 @@
     <div class="row mb-4">
       <div class="col-12">
         <div class="d-flex justify-content-between align-items-center text-white">
-          <div>
-            <h2>لوحة تحكم الطبيب</h2>
-            <p class="mb-0">مرحباً {{ doctorData?.name }}</p>
-          </div>
+
+         <div>
+  <h2>{{ $t('doctorDashboard.title') }}</h2>
+  <p class="mb-0">
+    {{ $t('doctorDashboard.welcome') }}
+    {{ $i18n.locale === 'ar' ? "د. أحمد محمد علي" : "Dr. Ahmed Mohamed Ali" }}
+  </p>
+</div>
+
+
+
           <button class="btn btn-outline-light" @click="logout">
-            <i class="fas fa-sign-out-alt me-2"></i>تسجيل الخروج
+            <i class="fas fa-sign-out-alt me-2"></i>{{ $t('nav.logout') }}
           </button>
         </div>
       </div>
@@ -24,7 +31,7 @@
               <i class="fas fa-calendar-day"></i>
             </div>
             <h3 class="mb-1">{{ todayAppointments.length }}</h3>
-            <p class="text-muted mb-0">مواعيد اليوم</p>
+            <p class="text-muted mb-0">{{ $t('doctorDashboard.stats.todayAppointments') }}</p>
           </div>
         </div>
       </div>
@@ -36,7 +43,7 @@
               <i class="fas fa-calendar-check"></i>
             </div>
             <h3 class="mb-1">{{ upcomingAppointments.length }}</h3>
-            <p class="text-muted mb-0">مواعيد قادمة</p>
+            <p class="text-muted mb-0">{{ $t('doctorDashboard.stats.upcomingAppointments') }}</p>
           </div>
         </div>
       </div>
@@ -48,7 +55,7 @@
               <i class="fas fa-users"></i>
             </div>
             <h3 class="mb-1">{{ totalPatients }}</h3>
-            <p class="text-muted mb-0">إجمالي المرضى</p>
+            <p class="text-muted mb-0">{{ $t('doctorDashboard.stats.totalPatients') }}</p>
           </div>
         </div>
       </div>
@@ -60,7 +67,7 @@
               <i class="fas fa-star"></i>
             </div>
             <h3 class="mb-1">4.8</h3>
-            <p class="text-muted mb-0">التقييم</p>
+            <p class="text-muted mb-0">{{ $t('doctorDashboard.stats.rating') }}</p>
           </div>
         </div>
       </div>
@@ -78,7 +85,7 @@
                   :class="{ active: activeTab === 'today' }"
                   @click="activeTab = 'today'"
                 >
-                  <i class="fas fa-calendar-day me-2"></i>مواعيد اليوم
+                  <i class="fas fa-calendar-day me-2"></i>{{ $t('doctorDashboard.tabs.today') }}
                 </button>
               </li>
               <li class="nav-item">
@@ -87,7 +94,7 @@
                   :class="{ active: activeTab === 'upcoming' }"
                   @click="activeTab = 'upcoming'"
                 >
-                  <i class="fas fa-calendar-alt me-2"></i>مواعيد قادمة
+                  <i class="fas fa-calendar-alt me-2"></i>{{ $t('doctorDashboard.tabs.upcoming') }}
                 </button>
               </li>
               <li class="nav-item">
@@ -96,7 +103,7 @@
                   :class="{ active: activeTab === 'history' }"
                   @click="activeTab = 'history'"
                 >
-                  <i class="fas fa-history me-2"></i>التاريخ المرضي
+                  <i class="fas fa-history me-2"></i>{{ $t('doctorDashboard.tabs.history') }}
                 </button>
               </li>
               <li class="nav-item">
@@ -105,7 +112,7 @@
                   :class="{ active: activeTab === 'profile' }"
                   @click="activeTab = 'profile'"
                 >
-                  <i class="fas fa-user-cog me-2"></i>الملف الشخصي
+                  <i class="fas fa-user-cog me-2"></i>{{ $t('doctorDashboard.tabs.profile') }}
                 </button>
               </li>
             </ul>
@@ -114,11 +121,11 @@
           <div class="card-body">
             <!-- Today's Appointments -->
             <div v-if="activeTab === 'today'">
-              <h5 class="mb-3">مواعيد اليوم - {{ formatDate(new Date()) }}</h5>
+              <h5 class="mb-3">{{ $t('doctorDashboard.todayAppointments') }} - {{ formatDate(new Date()) }}</h5>
               
               <div v-if="todayAppointments.length === 0" class="text-center py-4">
                 <i class="fas fa-calendar-times fa-3x text-muted mb-3"></i>
-                <h6 class="text-muted">لا توجد مواعيد اليوم</h6>
+                <h6 class="text-muted">{{ $t('doctorDashboard.noTodayAppointments') }}</h6>
               </div>
               
               <div v-else class="row g-3">
@@ -142,25 +149,25 @@
                         </div>
                       </div>
                       <div class="col-md-2">
-                        <span class="status-badge" :class="'status-' + appointment.status">
-                          {{ appointment.status }}
+                        <span class="status-badge" :class="'status-' + appointment.status.replace(' ', '_')">
+                          {{ getStatusTranslation(appointment.status) }}
                         </span>
                       </div>
                       <div class="col-md-2">
                         <div class="dropdown">
                           <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                            إجراءات
+                            {{ $t('common.actions') }}
                           </button>
                           <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#" @click="viewPatientDetails(appointment)">عرض التفاصيل</a></li>
-                            <li><a class="dropdown-item" href="#" @click="markComplete(appointment)">تم الكشف</a></li>
-                            <li><a class="dropdown-item" href="#" @click="markNoShow(appointment)">لم يحضر</a></li>
+                            <li><a class="dropdown-item" href="#" @click="viewPatientDetails(appointment)">{{ $t('doctorDashboard.viewDetails') }}</a></li>
+                            <li><a class="dropdown-item" href="#" @click="markComplete(appointment)">{{ $t('doctorDashboard.markComplete') }}</a></li>
+                            <li><a class="dropdown-item" href="#" @click="markNoShow(appointment)">{{ $t('doctorDashboard.markNoShow') }}</a></li>
                           </ul>
                         </div>
                       </div>
                     </div>
                     <div v-if="appointment.notes" class="mt-2 p-2 bg-light rounded">
-                      <small><strong>ملاحظات:</strong> {{ appointment.notes }}</small>
+                      <small><strong>{{ $t('common.notes') }}:</strong> {{ appointment.notes }}</small>
                     </div>
                   </div>
                 </div>
@@ -169,11 +176,11 @@
 
             <!-- Upcoming Appointments -->
             <div v-if="activeTab === 'upcoming'">
-              <h5 class="mb-3">المواعيد القادمة</h5>
+              <h5 class="mb-3">{{ $t('doctorDashboard.upcomingAppointments') }}</h5>
               
               <div v-if="upcomingAppointments.length === 0" class="text-center py-4">
                 <i class="fas fa-calendar-plus fa-3x text-muted mb-3"></i>
-                <h6 class="text-muted">لا توجد مواعيد قادمة</h6>
+                <h6 class="text-muted">{{ $t('doctorDashboard.noUpcomingAppointments') }}</h6>
               </div>
               
               <div v-else class="row g-3">
@@ -182,8 +189,8 @@
                     <div class="card-body">
                       <div class="d-flex justify-content-between mb-2">
                         <h6 class="mb-0">{{ appointment.patientName }}</h6>
-                        <span class="status-badge" :class="'status-' + appointment.status">
-                          {{ appointment.status }}
+                        <span class="status-badge" :class="'status-' + appointment.status.replace(' ', '_')">
+                          {{ getStatusTranslation(appointment.status) }}
                         </span>
                       </div>
                       <p class="text-muted mb-2">
@@ -194,7 +201,7 @@
                         <i class="fas fa-phone me-1"></i>{{ appointment.phone }}
                       </p>
                       <div v-if="appointment.notes" class="mt-2 p-2 bg-light rounded">
-                        <small><strong>ملاحظات:</strong> {{ appointment.notes }}</small>
+                        <small><strong>{{ $t('common.notes') }}:</strong> {{ appointment.notes }}</small>
                       </div>
                     </div>
                   </div>
@@ -204,17 +211,17 @@
 
             <!-- Patient History -->
             <div v-if="activeTab === 'history'">
-              <h5 class="mb-3">التاريخ المرضي</h5>
+              <h5 class="mb-3">{{ $t('doctorDashboard.patientHistory') }}</h5>
               
               <div class="table-responsive">
                 <table class="table table-hover">
                   <thead>
                     <tr>
-                      <th>اسم المريض</th>
-                      <th>التاريخ</th>
-                      <th>الوقت</th>
-                      <th>الحالة</th>
-                      <th>الإجراءات</th>
+                      <th>{{ $t('doctorDashboard.patientName') }}</th>
+                      <th>{{ $t('common.date') }}</th>
+                      <th>{{ $t('common.time') }}</th>
+                      <th>{{ $t('common.status') }}</th>
+                      <th>{{ $t('common.actions') }}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -223,8 +230,8 @@
                       <td>{{ formatDate(appointment.date) }}</td>
                       <td>{{ appointment.time }}</td>
                       <td>
-                        <span class="status-badge" :class="'status-' + appointment.status">
-                          {{ appointment.status }}
+                        <span class="status-badge" :class="'status-' + appointment.status.replace(' ', '_')">
+                          {{ getStatusTranslation(appointment.status) }}
                         </span>
                       </td>
                       <td>
@@ -240,35 +247,35 @@
 
             <!-- Profile Settings -->
             <div v-if="activeTab === 'profile'">
-              <h5 class="mb-3">الملف الشخصي</h5>
+              <h5 class="mb-3">{{ $t('doctorDashboard.profile') }}</h5>
               
               <div class="row">
                 <div class="col-md-8">
                   <form @submit.prevent="updateProfile">
                     <div class="row g-3">
                       <div class="col-md-6">
-                        <label class="form-label">الاسم</label>
+                        <label class="form-label">{{ $t('common.name') }}</label>
                         <input type="text" class="form-control" v-model="profileData.name">
                       </div>
                       <div class="col-md-6">
-                        <label class="form-label">التخصص</label>
+                        <label class="form-label">{{ $t('booking.specialty') }}</label>
                         <input type="text" class="form-control" v-model="profileData.specialty">
                       </div>
                       <div class="col-md-6">
-                        <label class="form-label">رقم الهاتف</label>
+                        <label class="form-label">{{ $t('common.phone') }}</label>
                         <input type="tel" class="form-control" v-model="profileData.phone">
                       </div>
                       <div class="col-md-6">
-                        <label class="form-label">البريد الإلكتروني</label>
+                        <label class="form-label">{{ $t('common.email') }}</label>
                         <input type="email" class="form-control" v-model="profileData.email">
                       </div>
                       <div class="col-12">
-                        <label class="form-label">العنوان</label>
+                        <label class="form-label">{{ $t('contact.address') }}</label>
                         <textarea class="form-control" v-model="profileData.address" rows="3"></textarea>
                       </div>
                       <div class="col-12">
                         <button type="submit" class="btn btn-primary">
-                          <i class="fas fa-save me-2"></i>حفظ التغييرات
+                          <i class="fas fa-save me-2"></i>{{ $t('doctorDashboard.saveChanges') }}
                         </button>
                       </div>
                     </div>
@@ -286,44 +293,44 @@
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">تفاصيل المريض</h5>
+            <h5 class="modal-title">{{ $t('doctorDashboard.patientDetails') }}</h5>
             <button type="button" class="btn-close" @click="closePatientModal"></button>
           </div>
           <div class="modal-body" v-if="selectedPatient">
             <div class="row">
               <div class="col-md-6">
-                <h6 class="text-primary">معلومات المريض</h6>
+                <h6 class="text-primary">{{ $t('doctorDashboard.patientInfo') }}</h6>
                 <table class="table table-borderless">
                   <tr>
-                    <td><strong>الاسم:</strong></td>
+                    <td><strong>{{ $t('common.name') }}:</strong></td>
                     <td>{{ selectedPatient.patientName }}</td>
                   </tr>
                   <tr>
-                    <td><strong>رقم الهاتف:</strong></td>
+                    <td><strong>{{ $t('common.phone') }}:</strong></td>
                     <td>{{ selectedPatient.phone }}</td>
                   </tr>
                   <tr>
-                    <td><strong>البريد الإلكتروني:</strong></td>
+                    <td><strong>{{ $t('common.email') }}:</strong></td>
                     <td>{{ selectedPatient.email }}</td>
                   </tr>
                 </table>
               </div>
               <div class="col-md-6">
-                <h6 class="text-primary">معلومات الموعد</h6>
+                <h6 class="text-primary">{{ $t('doctorDashboard.appointmentInfo') }}</h6>
                 <table class="table table-borderless">
                   <tr>
-                    <td><strong>التاريخ:</strong></td>
+                    <td><strong>{{ $t('common.date') }}:</strong></td>
                     <td>{{ formatDate(selectedPatient.date) }}</td>
                   </tr>
                   <tr>
-                    <td><strong>الوقت:</strong></td>
+                    <td><strong>{{ $t('common.time') }}:</strong></td>
                     <td>{{ selectedPatient.time }}</td>
                   </tr>
                   <tr>
-                    <td><strong>الحالة:</strong></td>
+                    <td><strong>{{ $t('common.status') }}:</strong></td>
                     <td>
-                      <span class="status-badge" :class="'status-' + selectedPatient.status">
-                        {{ selectedPatient.status }}
+                      <span class="status-badge" :class="'status-' + selectedPatient.status.replace(' ', '_')">
+                        {{ getStatusTranslation(selectedPatient.status) }}
                       </span>
                     </td>
                   </tr>
@@ -332,7 +339,7 @@
             </div>
             
             <div v-if="selectedPatient.notes" class="mt-3">
-              <h6 class="text-primary">ملاحظات المريض</h6>
+              <h6 class="text-primary">{{ $t('doctorDashboard.patientNotes') }}</h6>
               <div class="p-3 bg-light rounded">
                 {{ selectedPatient.notes }}
               </div>
@@ -340,7 +347,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" @click="closePatientModal">
-              إغلاق
+              {{ $t('common.close') }}
             </button>
           </div>
         </div>
@@ -350,8 +357,18 @@
 </template>
 
 <script>
+import { useLanguage } from '@/composables/useLanguage'
+
 export default {
   name: 'DoctorDashboard',
+  setup() {
+    const { formatDate, formatDateTime, getStatusTranslation } = useLanguage()
+    return {
+      formatDate,
+      formatDateTime,
+      getStatusTranslation
+    }
+  },
   data() {
     return {
       doctorData: null,
@@ -445,16 +462,7 @@ export default {
       this.doctorData = updatedData
       
       // Show success message
-      alert('تم حفظ التغييرات بنجاح')
-    },
-    formatDate(dateString) {
-      const options = { 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric',
-        weekday: 'long'
-      }
-      return new Date(dateString).toLocaleDateString('ar-EG', options)
+      alert(this.$t('doctorDashboard.profileUpdated'))
     }
   }
 }
@@ -516,7 +524,7 @@ export default {
   color: white;
 }
 
-.status-لم\ يحضر {
+.status-لم_يحضر {
   background: #fd7e14;
   color: white;
 }

@@ -1,35 +1,30 @@
 export default {
-  // Header
+  // Navigation
   nav: {
     home: 'الرئيسية',
     doctors: 'الأطباء',
     myAppointments: 'مواعيدي',
     contact: 'اتصل بنا',
     doctorLogin: 'دخول الأطباء',
-    logo: 'عيادتي'
+    logout: 'تسجيل الخروج'
   },
-
-
-  export : {
-  common: {
-    darkMode: 'الوضع المظلم',
-    lightMode: 'الوضع المضيء'
-  },
-  // باقي الترجمات
-},
-
-
 
   // Common
   common: {
     search: 'بحث',
-    submit: 'إرسال',
+    filter: 'فلتر',
+    all: 'الكل',
+    next: 'التالي',
+    previous: 'السابق',
+    close: 'إغلاق',
     cancel: 'إلغاء',
+    confirm: 'تأكيد',
     save: 'حفظ',
     edit: 'تعديل',
     delete: 'حذف',
-    close: 'إغلاق',
+    view: 'عرض',
     loading: 'جاري التحميل...',
+    submit: 'إرسال',
     name: 'الاسم',
     email: 'البريد الإلكتروني',
     phone: 'رقم الهاتف',
@@ -37,25 +32,18 @@ export default {
     time: 'الوقت',
     status: 'الحالة',
     actions: 'الإجراءات',
-    details: 'التفاصيل',
-    back: 'رجوع',
-    next: 'التالي',
-    previous: 'السابق',
-    all: 'الكل',
-    yes: 'نعم',
-    no: 'لا',
-    optional: 'اختياري',
-    required: 'مطلوب'
+    notes: 'ملاحظات',
+    required: 'مطلوب',
+    optional: 'اختياري'
   },
 
   // Home Page
   home: {
-    title: 'مرحباً بك في عيادتي',
+    welcome: 'مرحباً بك في عيادتي',
     subtitle: 'احجز موعدك مع أفضل الأطباء في مصر بكل سهولة',
     searchPlaceholder: 'ابحث عن طبيب أو تخصص...',
-    popularSpecialties: 'التخصصات الأكثر طلباً',
     features: {
-      fastBooking: {
+      quickBooking: {
         title: 'حجز سريع',
         description: 'احجز موعدك في ثوانٍ معدودة'
       },
@@ -68,6 +56,7 @@ export default {
         description: 'واجهة سهلة ومتوافقة مع الهواتف'
       }
     },
+    popularSpecialties: 'التخصصات الأكثر طلباً',
     stats: {
       doctors: 'طبيب مُسجل',
       appointments: 'موعد تم حجزه',
@@ -78,36 +67,39 @@ export default {
 
   // Doctors Page
   doctors: {
-    title: 'قائمة الأطباء',
+    title: 'الأطباء',
     searchPlaceholder: 'ابحث عن طبيب...',
     resultsFound: 'تم العثور على {count} طبيب',
-    noResults: 'لا توجد نتائج',
-    noResultsDesc: 'جرب البحث بكلمات أخرى أو اختر تخصص مختلف',
+    noResults: {
+      title: 'لا توجد نتائج',
+      message: 'جرب البحث بكلمات أخرى أو اختر تخصص مختلف'
+    },
     bookAppointment: 'احجز موعد',
-    experience: 'سنة خبرة',
-    availableToday: 'المواعيد المتاحة اليوم',
-    currency: 'جنيه',
-    specialties: {
-      general: 'طب عام',
-      pediatrics: 'أطفال',
-      dentistry: 'أسنان',
-      dermatology: 'جلدية',
-      ophthalmology: 'عيون',
-      cardiology: 'قلب',
-      orthopedics: 'عظام',
-      gynecology: 'نساء وولادة'
-    }
+    experience: 'سنة خبرة | سنوات خبرة',
+    availableToday: 'المواعيد المتاحة اليوم:',
+    egp: 'جنيه'
+  },
+
+  // Specialties
+  specialties: {
+    'طب عام': 'طب عام',
+    'أطفال': 'أطفال',
+    'أسنان': 'أسنان',
+    'جلدية': 'جلدية',
+    'عيون': 'عيون',
+    'قلب': 'قلب',
+    'عظام': 'عظام',
+    'نساء وولادة': 'نساء وولادة'
   },
 
   // Booking Page
   booking: {
     title: 'حجز موعد',
-    patientName: 'الاسم الكامل',
-    phone: 'رقم الهاتف',
-    email: 'البريد الإلكتروني',
+    patientInfo: 'معلومات المريض',
+    fullName: 'الاسم الكامل',
     appointmentDate: 'تاريخ الموعد',
     appointmentTime: 'توقيت الموعد',
-    notes: 'ملاحظات إضافية',
+    additionalNotes: 'ملاحظات إضافية',
     notesPlaceholder: 'اكتب أي ملاحظات أو أعراض تريد إخبار الطبيب بها...',
     bookingSummary: 'ملخص الحجز',
     doctor: 'الطبيب',
@@ -116,21 +108,10 @@ export default {
     confirmBooking: 'تأكيد الحجز',
     booking: 'جاري الحجز...',
     success: {
-      title: 'تم الحجز بنجاح',
+      title: 'تم الحجز بنجاح!',
       message: 'تم حجز موعدك بنجاح!',
       bookingNumber: 'رقم الحجز',
       confirmationMessage: 'سيتم إرسال رسالة تأكيد على رقم الهاتف والبريد الإلكتروني المُسجل'
-    },
-    errors: {
-      nameRequired: 'الاسم مطلوب',
-      nameMinLength: 'الاسم يجب أن يكون 3 أحرف على الأقل',
-      phoneRequired: 'رقم الهاتف مطلوب',
-      phoneInvalid: 'رقم الهاتف غير صحيح',
-      emailRequired: 'البريد الإلكتروني مطلوب',
-      emailInvalid: 'البريد الإلكتروني غير صحيح',
-      dateRequired: 'تاريخ الموعد مطلوب',
-      dateFuture: 'يجب اختيار تاريخ مستقبلي',
-      timeRequired: 'وقت الموعد مطلوب'
     }
   },
 
@@ -138,40 +119,32 @@ export default {
   myAppointments: {
     title: 'مواعيدي',
     subtitle: 'إدارة جميع مواعيدك الطبية',
-    tabs: {
+    filters: {
       all: 'الكل',
       upcoming: 'القادمة',
       past: 'السابقة'
     },
-    noAppointments: 'لا توجد مواعيد',
-    noAppointmentsDesc: 'لم تقم بحجز أي موعد بعد',
-    bookNewAppointment: 'احجز موعد جديد',
-    bookingNumber: 'رقم الحجز',
+    noAppointments: {
+      title: 'لا توجد مواعيد',
+      message: 'لم تقم بحجز أي موعد بعد',
+      bookNew: 'احجز موعد جديد'
+    },
+    bookingId: 'رقم الحجز',
     cancelAppointment: 'إلغاء',
-    rescheduleAppointment: 'تعديل',
+    reschedule: 'تعديل',
     viewDetails: 'التفاصيل',
     cancelConfirm: {
       title: 'تأكيد الإلغاء',
       message: 'هل أنت متأكد من إلغاء هذا الموعد؟',
       reason: 'سبب الإلغاء (اختياري)',
       reasonPlaceholder: 'أدخل سبب الإلغاء...',
-      cancelOperation: 'إلغاء العملية',
-      confirmCancel: 'إلغاء الموعد'
+      confirmCancel: 'إلغاء الموعد',
+      cancelAction: 'إلغاء العملية'
     },
-    appointmentDetails: {
-      title: 'تفاصيل الموعد',
-      patientInfo: 'معلومات المريض',
-      appointmentInfo: 'معلومات الموعد',
-      bookingDate: 'تاريخ الحجز',
-      additionalNotes: 'ملاحظات إضافية'
-    },
-    status: {
-      confirmed: 'مؤكد',
-      pending: 'في الانتظار',
-      cancelled: 'ملغي',
-      completed: 'مكتمل',
-      noShow: 'لم يحضر'
-    }
+    appointmentDetails: 'تفاصيل الموعد',
+    patientName: 'اسم المريض',
+    createdAt: 'تاريخ الحجز',
+    additionalNotes: 'ملاحظات إضافية'
   },
 
   // Contact Page
@@ -180,26 +153,23 @@ export default {
     subtitle: 'نحن هنا لمساعدتك، تواصل معنا في أي وقت',
     contactInfo: 'معلومات التواصل',
     address: 'العنوان',
-    addressValue: 'شارع التحرير، وسط البلد\nالقاهرة، مصر',
-    phone: 'الهاتف',
-    email: 'البريد الإلكتروني',
+    addressText: 'شارع التحرير، وسط البلد\nالقاهرة، مصر',
     workingHours: 'مواعيد العمل',
-    workingHoursValue: 'الأحد - الخميس: 8:00 ص - 8:00 م\nالجمعة - السبت: 10:00 ص - 6:00 م',
+    workingHoursText: 'الأحد - الخميس: 8:00 ص - 8:00 م\nالجمعة - السبت: 10:00 ص - 6:00 م',
     followUs: 'تابعنا على',
     sendMessage: 'أرسل لنا رسالة',
-    fullName: 'الاسم الكامل',
-    subject: 'نوع الاستفسار',
-    message: 'الرسالة',
-    messagePlaceholder: 'اكتب رسالتك هنا...',
-    sendingMessage: 'جاري الإرسال...',
-    sendMessageBtn: 'إرسال الرسالة',
-    subjects: {
+    inquiryType: 'نوع الاستفسار',
+    inquiryTypes: {
       booking: 'مشكلة في الحجز',
       technical: 'مشكلة تقنية',
       complaint: 'شكوى',
       suggestion: 'اقتراح',
       general: 'استفسار عام'
     },
+    message: 'الرسالة',
+    messagePlaceholder: 'اكتب رسالتك هنا...',
+    sending: 'جاري الإرسال...',
+    sendMessage: 'إرسال الرسالة',
     successMessage: 'تم إرسال رسالتك بنجاح! سنتواصل معك قريباً.',
     errorMessage: 'حدث خطأ أثناء إرسال الرسالة. يرجى المحاولة مرة أخرى.',
     faq: {
@@ -221,15 +191,13 @@ export default {
   doctorLogin: {
     title: 'دخول الأطباء',
     subtitle: 'سجل دخولك للوصول إلى لوحة التحكم',
-    email: 'البريد الإلكتروني',
     password: 'كلمة المرور',
     rememberMe: 'تذكرني',
     login: 'تسجيل الدخول',
     loggingIn: 'جاري تسجيل الدخول...',
     forgotPassword: 'نسيت كلمة المرور؟',
-    demoCredentials: 'بيانات تجريبية للدخول',
+    demoCredentials: 'بيانات تجريبية للدخول:',
     useDemoCredentials: 'استخدام البيانات التجريبية',
-    invalidCredentials: 'البريد الإلكتروني أو كلمة المرور غير صحيحة',
     resetPassword: {
       title: 'استعادة كلمة المرور',
       message: 'أدخل بريدك الإلكتروني وسنرسل لك رابط لاستعادة كلمة المرور',
@@ -241,8 +209,7 @@ export default {
   // Doctor Dashboard
   doctorDashboard: {
     title: 'لوحة تحكم الطبيب',
-    welcome: 'مرحباً {name}',
-    logout: 'تسجيل الخروج',
+    welcome: 'مرحباً',
     stats: {
       todayAppointments: 'مواعيد اليوم',
       upcomingAppointments: 'مواعيد قادمة',
@@ -255,24 +222,32 @@ export default {
       history: 'التاريخ المرضي',
       profile: 'الملف الشخصي'
     },
-    noAppointmentsToday: 'لا توجد مواعيد اليوم',
+    todayAppointments: 'مواعيد اليوم',
+    noTodayAppointments: 'لا توجد مواعيد اليوم',
+    upcomingAppointments: 'المواعيد القادمة',
     noUpcomingAppointments: 'لا توجد مواعيد قادمة',
-    patientDetails: 'تفاصيل المريض',
+    patientHistory: 'التاريخ المرضي',
+    patientName: 'اسم المريض',
+    viewDetails: 'عرض التفاصيل',
     markComplete: 'تم الكشف',
     markNoShow: 'لم يحضر',
+    profile: 'الملف الشخصي',
+    updateProfile: 'تحديث الملف الشخصي',
+    saveChanges: 'حفظ التغييرات',
+    profileUpdated: 'تم حفظ التغييرات بنجاح',
+    patientDetails: 'تفاصيل المريض',
     patientInfo: 'معلومات المريض',
     appointmentInfo: 'معلومات الموعد',
-    patientNotes: 'ملاحظات المريض',
-    profile: {
-      title: 'الملف الشخصي',
-      name: 'الاسم',
-      specialty: 'التخصص',
-      phone: 'رقم الهاتف',
-      email: 'البريد الإلكتروني',
-      address: 'العنوان',
-      saveChanges: 'حفظ التغييرات',
-      changesSaved: 'تم حفظ التغييرات بنجاح'
-    }
+    patientNotes: 'ملاحظات المريض'
+  },
+
+  // Status
+  status: {
+    مؤكد: 'مؤكد',
+    'في الانتظار': 'في الانتظار',
+    ملغي: 'ملغي',
+    مكتمل: 'مكتمل',
+    'لم يحضر': 'لم يحضر'
   },
 
   // Footer
@@ -280,13 +255,35 @@ export default {
     description: 'نظام حجز المواعيد الطبية الأكثر تطوراً في مصر',
     quickLinks: 'روابط سريعة',
     contactUs: 'تواصل معنا',
-    rights: 'جميع الحقوق محفوظة'
+    rightsReserved: 'جميع الحقوق محفوظة.'
   },
 
-  // Notifications
-  notifications: {
-    appointmentReminder: 'تذكير بالموعد',
-    upcomingAppointment: 'لديك موعد مع {doctorName} في {date} الساعة {time}',
+  // Validation Messages
+  validation: {
+    required: 'هذا الحقل مطلوب',
+    email: 'البريد الإلكتروني غير صحيح',
+    phone: 'رقم الهاتف غير صحيح',
+    minLength: 'يجب أن يكون {min} أحرف على الأقل',
+    futureDate: 'يجب اختيار تاريخ مستقبلي',
+    invalidCredentials: 'البريد الإلكتروني أو كلمة المرور غير صحيحة'
+  },
+
+  // Theme
+  theme: {
+    light: 'الوضع المضيء',
+    dark: 'الوضع المظلم'
+  },
+
+  // Language
+  language: {
+    arabic: 'العربية',
+    english: 'English'
+  },
+
+  // Reminders
+  reminder: {
+    title: 'تذكير بالموعد',
+    message: 'لديك موعد مع {doctorName} في {date} الساعة {time}',
     ok: 'حسناً'
   }
 }

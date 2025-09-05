@@ -4,15 +4,15 @@
     <section class="hero">
       <div class="container">
         <div class="fade-in-up">
-          <h1>مرحباً بك في عيادتي</h1>
-          <p>احجز موعدك مع أفضل الأطباء في مصر بكل سهولة</p>
+          <h1>{{ $t('home.welcome') }}</h1>
+          <p>{{ $t('home.subtitle') }}</p>
           
           <div class="search-box mt-4">
             <div class="input-group">
               <input 
                 type="text" 
                 class="form-control search-input" 
-                placeholder="ابحث عن طبيب أو تخصص..."
+                :placeholder="$t('home.searchPlaceholder')"
                 v-model="searchQuery"
                 @keyup.enter="searchDoctors"
               >
@@ -35,8 +35,8 @@
                 <div class="mb-3">
                   <i :class="feature.icon" style="font-size: 3rem; color: #667eea;"></i>
                 </div>
-                <h5 class="card-title">{{ feature.title }}</h5>
-                <p class="card-text">{{ feature.description }}</p>
+                <h5 class="card-title">{{ $t(feature.titleKey) }}</h5>
+                <p class="card-text">{{ $t(feature.descriptionKey) }}</p>
               </div>
             </div>
           </div>
@@ -47,14 +47,14 @@
     <!-- Popular Specialties -->
     <section class="py-5">
       <div class="container">
-        <h2 class="text-center text-white mb-5">التخصصات الأكثر طلباً</h2>
+        <h2 class="text-center text-white mb-5">{{ $t('home.popularSpecialties') }}</h2>
         <div class="row g-4">
           <div class="col-md-3 col-sm-6" v-for="specialty in popularSpecialties" :key="specialty.id">
             <div class="card doctor-card text-center h-100" @click="searchBySpecialty(specialty.name)">
               <div class="card-body">
                 <i :class="specialty.icon" style="font-size: 2.5rem; color: #667eea;" class="mb-3"></i>
-                <h6 class="card-title">{{ specialty.name }}</h6>
-                <p class="text-muted small">{{ specialty.count }} طبيب</p>
+                <h6 class="card-title">{{ getSpecialtyName(specialty.name) }}</h6>
+                <p class="text-muted small">{{ specialty.count }} {{ getDoctorText() }}</p>
               </div>
             </div>
           </div>
@@ -67,20 +67,20 @@
       <div class="container">
         <div class="row text-center text-white">
           <div class="col-md-3 col-6 mb-4">
-            <h3 class="display-4 fw-bold">{{ stats.doctors }}+</h3>
-            <p>طبيب مُسجل</p>
+            <h3 class="display-4 fw-bold">{{ formatNumber(stats.doctors) }}+</h3>
+            <p>{{ $t('home.stats.doctors') }}</p>
           </div>
           <div class="col-md-3 col-6 mb-4">
-            <h3 class="display-4 fw-bold">{{ stats.appointments }}+</h3>
-            <p>موعد تم حجزه</p>
+            <h3 class="display-4 fw-bold">{{ formatNumber(stats.appointments) }}+</h3>
+            <p>{{ $t('home.stats.appointments') }}</p>
           </div>
           <div class="col-md-3 col-6 mb-4">
-            <h3 class="display-4 fw-bold">{{ stats.patients }}+</h3>
-            <p>مريض راضي</p>
+            <h3 class="display-4 fw-bold">{{ formatNumber(stats.patients) }}+</h3>
+            <p>{{ $t('home.stats.patients') }}</p>
           </div>
           <div class="col-md-3 col-6 mb-4">
-            <h3 class="display-4 fw-bold">{{ stats.specialties }}+</h3>
-            <p>تخصص طبي</p>
+            <h3 class="display-4 fw-bold">{{ formatNumber(stats.specialties) }}+</h3>
+            <p>{{ $t('home.stats.specialties') }}</p>
           </div>
         </div>
       </div>
@@ -89,8 +89,19 @@
 </template>
 
 <script>
+import { useLanguage } from '@/composables/useLanguage'
+
 export default {
   name: 'Home',
+  setup() {
+    const { t, formatNumber, getSpecialtyTranslation } = useLanguage()
+    
+    return {
+      t,
+      formatNumber,
+      getSpecialtyTranslation
+    }
+  },
   data() {
     return {
       searchQuery: '',
@@ -98,20 +109,20 @@ export default {
         {
           id: 1,
           icon: 'fas fa-clock',
-          title: 'حجز سريع',
-          description: 'احجز موعدك في ثوانٍ معدودة'
+          titleKey: 'home.features.quickBooking.title',
+          descriptionKey: 'home.features.quickBooking.description'
         },
         {
           id: 2,
           icon: 'fas fa-user-md',
-          title: 'أطباء معتمدون',
-          description: 'جميع أطبائنا مُرخصون ومعتمدون'
+          titleKey: 'home.features.certifiedDoctors.title',
+          descriptionKey: 'home.features.certifiedDoctors.description'
         },
         {
           id: 3,
           icon: 'fas fa-mobile-alt',
-          title: 'سهولة الاستخدام',
-          description: 'واجهة سهلة ومتوافقة مع الهواتف'
+          titleKey: 'home.features.easyToUse.title',
+          descriptionKey: 'home.features.easyToUse.description'
         }
       ],
       popularSpecialties: [
@@ -146,6 +157,13 @@ export default {
         path: '/doctors', 
         query: { specialty: specialty } 
       })
+    },
+    getSpecialtyName(specialtyKey) {
+      return this.getSpecialtyTranslation(specialtyKey)
+    },
+    getDoctorText() {
+      // Handle singular/plural for doctor word
+      return this.$i18n.locale === 'ar' ? 'طبيب' : 'doctor'
     }
   }
 }

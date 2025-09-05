@@ -9,11 +9,11 @@
               <input 
                 type="text" 
                 class="form-control search-input" 
-                placeholder="ابحث عن طبيب..."
+                :placeholder="$t('doctors.searchPlaceholder')"
                 v-model="searchQuery"
                 @input="filterDoctors"
               >
-              <button class="search-btn">
+              <button class="search-btn" type="button">
                 <i class="fas fa-search"></i>
               </button>
             </div>
@@ -26,8 +26,9 @@
               :key="specialty"
               @click="filterBySpecialty(specialty)"
               :class="['filter-btn', { active: selectedSpecialty === specialty }]"
+              type="button"
             >
-              {{ specialty }}
+              {{ specialty === 'الكل' ? $t('common.all') : $t('specialties.' + specialty) }}
             </button>
           </div>
         </div>
@@ -36,28 +37,42 @@
 
     <!-- Results Count -->
     <div class="text-white mb-3">
-      <p>تم العثور على {{ filteredDoctors.length }} طبيب</p>
+      <p>{{ $t('doctors.resultsFound', { count: filteredDoctors.length }) }}</p>
+    </div>
+
+    <!-- Loading State -->
+    <div v-if="loading" class="text-center text-white py-5">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <p class="mt-3">{{ $t('common.loading') }}</p>
     </div>
 
     <!-- Doctors Grid -->
-    <div class="row g-4">
+    <div v-else class="row g-4">
       <div class="col-lg-4 col-md-6" v-for="doctor in paginatedDoctors" :key="doctor.id">
         <div class="card doctor-card fade-in-up">
           <div class="card-body p-4">
             <div class="text-center mb-3">
-              <img :src="doctor.image" :alt="doctor.name" class="doctor-img">
-              <h5 class="card-title mt-3 mb-2">{{ doctor.name }}</h5>
-              <span class="specialty-badge">{{ doctor.specialty }}</span>
+              <img 
+                :src="doctor.image" 
+                :alt="getLocalizedName(doctor)" 
+                class="doctor-img"
+                @error="handleImageError($event)"
+                loading="lazy"
+              >
+              <h5 class="card-title mt-3 mb-2">{{ getLocalizedName(doctor) }}</h5>
+              <span class="specialty-badge">{{ $t('specialties.' + doctor.specialty) }}</span>
             </div>
             
             <div class="doctor-info">
               <p class="mb-2">
                 <i class="fas fa-map-marker-alt text-primary me-2"></i>
-                {{ doctor.location }}
+                {{ getLocalizedLocation(doctor) }}
               </p>
               <p class="mb-2">
                 <i class="fas fa-graduation-cap text-success me-2"></i>
-                {{ doctor.experience }}
+                {{ getLocalizedExperience(doctor) }}
               </p>
               <p class="mb-2">
                 <i class="fas fa-star text-warning me-2"></i>
@@ -65,12 +80,12 @@
               </p>
               <p class="mb-3">
                 <i class="fas fa-money-bill-wave text-info me-2"></i>
-                {{ doctor.price }} جنيه
+                {{ doctor.price }} {{ $t('doctors.egp') }}
               </p>
               
               <!-- Available Slots -->
               <div class="mb-3">
-                <small class="text-muted">المواعيد المتاحة اليوم:</small>
+                <small class="text-muted">{{ $t('doctors.availableToday') }}</small>
                 <div class="d-flex flex-wrap gap-1 mt-1">
                   <span v-for="slot in doctor.availableSlots.slice(0, 3)" :key="slot" class="availability-badge">
                     {{ slot }}
@@ -82,9 +97,9 @@
               </div>
             </div>
             
-            <button @click="bookAppointment(doctor.id)" class="book-btn w-100">
+            <button @click="bookAppointment(doctor.id)" class="book-btn w-100" type="button" :disabled="loading">
               <i class="fas fa-calendar-plus me-2"></i>
-              احجز موعد
+              {{ $t('doctors.bookAppointment') }}
             </button>
           </div>
         </div>
@@ -92,18 +107,23 @@
     </div>
 
     <!-- No Results -->
-    <div v-if="filteredDoctors.length === 0" class="text-center text-white py-5">
+    <div v-if="!loading && filteredDoctors.length === 0" class="text-center text-white py-5">
       <i class="fas fa-search fa-3x mb-3 opacity-50"></i>
-      <h4>لا توجد نتائج</h4>
-      <p>جرب البحث بكلمات أخرى أو اختر تخصص مختلف</p>
+      <h4>{{ $t('doctors.noResults.title') }}</h4>
+      <p>{{ $t('doctors.noResults.message') }}</p>
     </div>
 
     <!-- Pagination -->
-    <nav v-if="totalPages > 1" class="mt-4">
-      <ul class="pagination">
+    <nav v-if="!loading && totalPages > 1" class="mt-4" aria-label="Doctors pagination">
+      <ul class="pagination justify-content-center">
         <li class="page-item" :class="{ disabled: currentPage === 1 }">
-          <button class="page-link" @click="goToPage(currentPage - 1)" :disabled="currentPage === 1">
-            <i class="fas fa-chevron-right"></i>
+          <button 
+            class="page-link" 
+            @click="goToPage(currentPage - 1)" 
+            :disabled="currentPage === 1"
+            type="button"
+          >
+            <i :class="$i18n.locale === 'ar' ? 'fas fa-chevron-right' : 'fas fa-chevron-left'"></i>
           </button>
         </li>
         <li 
@@ -112,11 +132,22 @@
           class="page-item" 
           :class="{ active: currentPage === page }"
         >
-          <button class="page-link" @click="goToPage(page)">{{ page }}</button>
+          <button 
+            class="page-link" 
+            @click="goToPage(page)"
+            type="button"
+          >
+            {{ page }}
+          </button>
         </li>
         <li class="page-item" :class="{ disabled: currentPage === totalPages }">
-          <button class="page-link" @click="goToPage(currentPage + 1)" :disabled="currentPage === totalPages">
-            <i class="fas fa-chevron-left"></i>
+          <button 
+            class="page-link" 
+            @click="goToPage(currentPage + 1)" 
+            :disabled="currentPage === totalPages"
+            type="button"
+          >
+            <i :class="$i18n.locale === 'ar' ? 'fas fa-chevron-left' : 'fas fa-chevron-right'"></i>
           </button>
         </li>
       </ul>
@@ -126,17 +157,23 @@
 
 <script>
 import { doctors, specialties } from '@/data/doctors.js'
+import { useLanguage } from '@/composables/useLanguage'
 
 export default {
   name: 'Doctors',
+  setup() {
+    const { locale } = useLanguage()
+    return { locale }
+  },
   data() {
     return {
-      doctors,
+      doctors: [],
       specialties,
       searchQuery: '',
       selectedSpecialty: 'الكل',
       currentPage: 1,
-      doctorsPerPage: 6
+      doctorsPerPage: 6,
+      loading: false
     }
   },
   computed: {
@@ -146,11 +183,13 @@ export default {
       // Filter by search query
       if (this.searchQuery) {
         const query = this.searchQuery.toLowerCase()
-        filtered = filtered.filter(doctor => 
-          doctor.name.toLowerCase().includes(query) ||
-          doctor.specialty.toLowerCase().includes(query) ||
-          doctor.location.toLowerCase().includes(query)
-        )
+        filtered = filtered.filter(doctor => {
+          const nameMatch = this.getLocalizedName(doctor).toLowerCase().includes(query)
+          const locationMatch = this.getLocalizedLocation(doctor).toLowerCase().includes(query)
+          const specialtyMatch = doctor.specialty.toLowerCase().includes(query)
+          
+          return nameMatch || specialtyMatch || locationMatch
+        })
       }
 
       // Filter by specialty
@@ -185,37 +224,117 @@ export default {
     }
   },
   mounted() {
-    // Check for query parameters
-    const { search, specialty } = this.$route.query
-    if (search) {
-      this.searchQuery = search
-    }
-    if (specialty) {
-      this.selectedSpecialty = specialty
-    }
+    this.initializeComponent()
   },
   watch: {
     filteredDoctors() {
       this.currentPage = 1
+    },
+    '$route.query': {
+      handler() {
+        this.handleRouteQuery()
+      },
+      deep: true
+    },
+    // Watch for language changes
+    '$i18n.locale'() {
+      this.selectedSpecialty = 'الكل'
+      this.searchQuery = ''
+      this.currentPage = 1
     }
   },
   methods: {
-    filterDoctors() {
-      // Method called on search input
+    initializeComponent() {
+      this.doctors = doctors
+      this.handleRouteQuery()
     },
+    
+    // Helper methods for localization
+    getLocalizedName(doctor) {
+      return this.$i18n.locale === 'ar' ? doctor.name : doctor.nameEn
+    },
+    
+    getLocalizedLocation(doctor) {
+      return this.$i18n.locale === 'ar' ? doctor.location : doctor.locationEn
+    },
+    
+    getLocalizedExperience(doctor) {
+      return this.$i18n.locale === 'ar' ? doctor.experience : doctor.experienceEn
+    },
+    
+    handleRouteQuery() {
+      if (!this.$route?.query) return
+      
+      const { search, specialty } = this.$route.query
+      
+      if (search && search !== this.searchQuery) {
+        this.searchQuery = search
+      }
+      
+      if (specialty && specialty !== this.selectedSpecialty && this.specialties.includes(specialty)) {
+        this.selectedSpecialty = specialty
+      }
+    },
+
+    filterDoctors() {
+      this.updateUrlQuery()
+    },
+    
     filterBySpecialty(specialty) {
       this.selectedSpecialty = specialty
       this.currentPage = 1
+      this.updateUrlQuery()
     },
-    goToPage(page) {
-      if (page >= 1 && page <= this.totalPages) {
-        this.currentPage = page
-        window.scrollTo({ top: 0, behavior: 'smooth' })
+    
+    updateUrlQuery() {
+      if (!this.$router || !this.$route) return
+      
+      const query = { ...this.$route.query }
+      
+      if (this.searchQuery.trim()) {
+        query.search = this.searchQuery.trim()
+      } else {
+        delete query.search
+      }
+      
+      if (this.selectedSpecialty !== 'الكل') {
+        query.specialty = this.selectedSpecialty
+      } else {
+        delete query.specialty
+      }
+      
+      // Only update if query actually changed
+      if (JSON.stringify(query) !== JSON.stringify(this.$route.query)) {
+        this.$router.replace({ query }).catch(() => {
+          // Ignore navigation errors
+        })
       }
     },
+    
+    goToPage(page) {
+      if (page >= 1 && page <= this.totalPages && page !== this.currentPage) {
+        this.currentPage = page
+        
+        // Smooth scroll to top
+        this.$nextTick(() => {
+          window.scrollTo({ top: 0, behavior: 'smooth' })
+        })
+      }
+    },
+    
     bookAppointment(doctorId) {
-      this.$router.push({ name: 'BookAppointment', params: { doctorId } })
+      this.$router.push({ 
+        name: 'BookAppointment', 
+        params: { doctorId: doctorId.toString() } 
+      })
+    },
+    
+    handleImageError(event) {
+      // Set fallback image
+      event.target.src = 'https://via.placeholder.com/200x200/4A90E2/FFFFFF?text=Doctor'
+      event.target.alt = 'Doctor placeholder image'
     }
   }
 }
 </script>
+

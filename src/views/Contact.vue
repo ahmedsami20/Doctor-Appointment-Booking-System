@@ -2,8 +2,8 @@
   <div class="container py-4">
     <div class="row">
       <div class="col-12 text-center text-white mb-4">
-        <h2><i class="fas fa-envelope me-2"></i>اتصل بنا</h2>
-        <p>نحن هنا لمساعدتك، تواصل معنا في أي وقت</p>
+        <h2><i class="fas fa-envelope me-2"></i>{{ $t('contact.title') }}</h2>
+        <p>{{ $t('contact.subtitle') }}</p>
       </div>
     </div>
 
@@ -12,7 +12,7 @@
       <div class="col-lg-4">
         <div class="card doctor-card h-100">
           <div class="card-body">
-            <h4 class="card-title text-center mb-4">معلومات التواصل</h4>
+            <h4 class="card-title text-center mb-4">{{ $t('contact.contactInfo') }}</h4>
             
             <div class="contact-info">
               <div class="contact-item mb-4">
@@ -21,24 +21,22 @@
                     <i class="fas fa-map-marker-alt"></i>
                   </div>
                   <div class="contact-details">
-                    <h6>العنوان</h6>
-                    <p class="text-muted mb-0">شارع التحرير، وسط البلد<br>القاهرة، مصر</p>
+                    <h6>{{ $t('contact.address') }}</h6>
+                    <p class="text-muted mb-0 ms-2" style="white-space: pre-line;">{{ $t('contact.addressText') }}</p>
                   </div>
                 </div>
               </div>
 
-              <div class="contact-item mb-4">
-                <div class="d-flex align-items-center">
-                  <div class="contact-icon bg-success">
-                    <i class="fas fa-phone"></i>
-                  </div>
-                  <div class="contact-details">
-                    <h6>الهاتف</h6>
-                    <p class="text-muted mb-0">60475229 10 20+</p>
-                    <p class="text-muted mb-0">55211147 15 20+</p>
-                  </div>
-                </div>
-              </div>
+              <div class="contact-item mb-4"> 
+              <div class="d-flex align-items-center"> 
+              <div class="contact-icon bg-success me-3"> 
+              <i class="fas fa-phone"></i> 
+              </div> 
+              <div class="contact-details"> 
+              <a href="tel:+201060475229" class="text-muted mb-0 ms-2" style="text-decoration: none; color: inherit;">
+              {{ $i18n.locale === 'ar' ? '60475229 10 20+' : '+20 10 60475229' }}</a> 
+              </div> </div> </div>
+
 
               <div class="contact-item mb-4">
                 <div class="d-flex align-items-center">
@@ -46,11 +44,17 @@
                     <i class="fas fa-envelope"></i>
                   </div>
                   <div class="contact-details">
-                    <h6>البريد الإلكتروني</h6>
+                    <h6>{{ $t('common.email') }}</h6>
+                    <p class="text-muted mb-0 ms-2">
+                      <a href="mailto:info@myClinic.com" class="text-decoration-none text-muted">
+                        info@myClinic.com
+                      </a>
+                    </p>
                     <p class="text-muted mb-0">
-                    <a href="mailto:info@eyadaty.com">info@eyadaty.com</a></p>
-                    <p class="text-muted mb-0">
-                    <a href="mailto:support@eyadaty.com">support@eyadaty.com</a></p>
+                      <a href="mailto:support@myClinic.com" class="text-decoration-none text-muted">
+                        support@myClinic.com
+                      </a>
+                    </p>
                   </div>
                 </div>
               </div>
@@ -61,9 +65,8 @@
                     <i class="fas fa-clock"></i>
                   </div>
                   <div class="contact-details">
-                    <h6>مواعيد العمل</h6>
-                    <p class="text-muted mb-0">الأحد - الخميس: 8:00 ص - 8:00 م</p>
-                    <p class="text-muted mb-0">الجمعة - السبت: 10:00 ص - 6:00 م</p>
+                    <h6>{{ $t('contact.workingHours') }}</h6>
+                    <p class="text-muted mb-0 ms-2" style="white-space: pre-line;">{{ $t('contact.workingHoursText') }}</p>
                   </div>
                 </div>
               </div>
@@ -71,18 +74,27 @@
 
             <!-- Social Media -->
             <div class="text-center mt-4">
-              <h6>تابعنا على</h6>
+              <h6>{{ $t('contact.followUs') }}</h6>
               <div class="social-links">
-                <a href="https://www.facebook.com/share/1FW8i2xXrf/" class="social-link facebook">
+                <a href="https://www.facebook.com/share/1FW8i2xXrf/" 
+                   class="social-link facebook" target="_blank" rel="noopener noreferrer">
                   <i class="fab fa-facebook-f"></i>
                 </a>
-                <a href="https://x.com/AhmedSa22217103?t=pKx2jS8RipCqzGp1DL3fgg&s=09" class="social-link twitter">
-                <i class="fab fa-x-twitter"></i>
+                
+                <a href="https://x.com/AhmedSa22217103?t=pKx2jS8RipCqzGp1DL3fgg&s=09" 
+                   class="social-link twitter" target="_blank" rel="noopener noreferrer">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 1200 1227" fill="currentColor">
+                    <path d="M714.163 519.284L1160.89 0H1053.25L667.137 450.887L356.003 0H0L468.492 681.821L0 1226.37H107.648L515.725 750.219L844.597 1226.37H1200L714.137 519.284H714.163ZM563.725 689.053L521.637 628.59L146.337 79.694H307.238L600.579 495.383L642.667 555.846L1078.2 1146.68H917.302L563.725 689.053Z"/>
+                  </svg>
                 </a>
-                <a href="https://www.instagram.com/ahmed_sami302?igsh=MXI3cHZ2dTA4OWozZA==" class="social-link instagram">
+
+                <a href="https://www.instagram.com/ahmed_sami302?igsh=MXI3cHZ2dTA4OWozZA==" 
+                   class="social-link instagram" target="_blank" rel="noopener noreferrer">
                   <i class="fab fa-instagram"></i>
                 </a>
-                <a href="https://www.linkedin.com/in/ahmed-sami-11a272222?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" class="social-link linkedin">
+                
+                <a href="https://www.linkedin.com/in/ahmed-sami-11a272222?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" 
+                   class="social-link linkedin" target="_blank" rel="noopener noreferrer">
                   <i class="fab fa-linkedin-in"></i>
                 </a>
               </div>
@@ -94,13 +106,13 @@
       <!-- Contact Form -->
       <div class="col-lg-8">
         <div class="form-container">
-          <h3 class="text-center mb-4">أرسل لنا رسالة</h3>
+          <h3 class="text-center mb-4">{{ $t('contact.sendMessage') }}</h3>
           
           <form @submit.prevent="submitForm">
             <div class="row g-3">
               <div class="col-md-6">
                 <div class="form-group">
-                  <label class="form-label">الاسم الكامل *</label>
+                  <label class="form-label">{{ $t('booking.fullName') }} *</label>
                   <input 
                     type="text" 
                     class="form-control" 
@@ -116,7 +128,7 @@
               
               <div class="col-md-6">
                 <div class="form-group">
-                  <label class="form-label">البريد الإلكتروني *</label>
+                  <label class="form-label">{{ $t('common.email') }} *</label>
                   <input 
                     type="email" 
                     class="form-control" 
@@ -132,7 +144,7 @@
               
               <div class="col-md-6">
                 <div class="form-group">
-                  <label class="form-label">رقم الهاتف</label>
+                  <label class="form-label">{{ $t('common.phone') }}</label>
                   <input 
                     type="tel" 
                     class="form-control" 
@@ -144,19 +156,19 @@
               
               <div class="col-md-6">
                 <div class="form-group">
-                  <label class="form-label">نوع الاستفسار *</label>
+                  <label class="form-label">{{ $t('contact.inquiryType') }} *</label>
                   <select 
                     class="form-control" 
                     v-model="form.subject"
                     :class="{ 'is-invalid': errors.subject }"
                     required
                   >
-                    <option value="">اختر نوع الاستفسار</option>
-                    <option value="booking">مشكلة في الحجز</option>
-                    <option value="technical">مشكلة تقنية</option>
-                    <option value="complaint">شكوى</option>
-                    <option value="suggestion">اقتراح</option>
-                    <option value="general">استفسار عام</option>
+                    <option value="">{{ $t('contact.inquiryTypes.booking') === 'مشكلة في الحجز' ? 'اختر نوع الاستفسار' : 'Select inquiry type' }}</option>
+                    <option value="booking">{{ $t('contact.inquiryTypes.booking') }}</option>
+                    <option value="technical">{{ $t('contact.inquiryTypes.technical') }}</option>
+                    <option value="complaint">{{ $t('contact.inquiryTypes.complaint') }}</option>
+                    <option value="suggestion">{{ $t('contact.inquiryTypes.suggestion') }}</option>
+                    <option value="general">{{ $t('contact.inquiryTypes.general') }}</option>
                   </select>
                   <div v-if="errors.subject" class="invalid-feedback">
                     {{ errors.subject }}
@@ -166,13 +178,13 @@
               
               <div class="col-12">
                 <div class="form-group">
-                  <label class="form-label">الرسالة *</label>
+                  <label class="form-label">{{ $t('contact.message') }} *</label>
                   <textarea 
                     class="form-control" 
                     v-model="form.message"
                     :class="{ 'is-invalid': errors.message }"
                     rows="5"
-                    placeholder="اكتب رسالتك هنا..."
+                    :placeholder="$t('contact.messagePlaceholder')"
                     required
                   ></textarea>
                   <div v-if="errors.message" class="invalid-feedback">
@@ -200,10 +212,10 @@
                 :disabled="isSubmitting"
               >
                 <span v-if="isSubmitting">
-                  <i class="fas fa-spinner fa-spin me-2"></i>جاري الإرسال...
+                  <i class="fas fa-spinner fa-spin me-2"></i>{{ $t('contact.sending') }}
                 </span>
                 <span v-else>
-                  <i class="fas fa-paper-plane me-2"></i>إرسال الرسالة
+                  <i class="fas fa-paper-plane me-2"></i>{{ $t('contact.sendMessage') }}
                 </span>
               </button>
             </div>
@@ -216,10 +228,10 @@
     <div class="row mt-5">
       <div class="col-12">
         <div class="form-container">
-          <h3 class="text-center mb-4">الأسئلة الشائعة</h3>
+          <h3 class="text-center mb-4">{{ $t('contact.faq.title') }}</h3>
           
           <div class="accordion" id="faqAccordion">
-            <div class="accordion-item" v-for="(faq, index) in faqs" :key="index">
+            <div class="accordion-item" v-for="(faq, index) in localizedFaqs" :key="index">
               <h2 class="accordion-header" :id="'heading' + index">
                 <button 
                   class="accordion-button"
@@ -267,27 +279,31 @@ export default {
       errors: {},
       isSubmitting: false,
       successMessage: '',
-      errorMessage: '',
-      faqs: [
+      errorMessage: ''
+    }
+  },
+  computed: {
+    localizedFaqs() {
+      return [
         {
-          question: 'كيف يمكنني حجز موعد؟',
-          answer: 'يمكنك حجز موعد من خلال الذهاب إلى صفحة "الأطباء" واختيار الطبيب المناسب، ثم النقر على "احجز موعد" وملء البيانات المطلوبة.'
+          question: this.$t('contact.faq.q1'),
+          answer: this.$t('contact.faq.a1')
         },
         {
-          question: 'هل يمكنني إلغاء أو تعديل موعدي؟',
-          answer: 'نعم، يمكنك إلغاء أو تعديل موعدك من خلال صفحة "مواعيدي" بشرط أن يكون الموعد قبل 24 ساعة على الأقل من الوقت المحدد.'
+          question: this.$t('contact.faq.q2'),
+          answer: this.$t('contact.faq.a2')
         },
         {
-          question: 'ما هي رسوم الكشف؟',
-          answer: 'تختلف رسوم الكشف حسب التخصص والطبيب. يمكنك رؤية الرسوم في صفحة تفاصيل كل طبيب قبل الحجز.'
+          question: this.$t('contact.faq.q3'),
+          answer: this.$t('contact.faq.a3')
         },
         {
-          question: 'هل يمكنني الدفع أونلاين؟',
-          answer: 'حالياً الدفع يتم في العيادة، لكن قريباً سنوفر خاصية الدفع الإلكتروني لمزيد من الراحة.'
+          question: this.$t('contact.faq.q4'),
+          answer: this.$t('contact.faq.a4')
         },
         {
-          question: 'ماذا لو تأخرت عن موعدي؟',
-          answer: 'في حالة التأخير، يرجى الاتصال بالعيادة فوراً. قد يتم تأجيل الموعد حسب جدول الطبيب وتوفر المواعيد.'
+          question: this.$t('contact.faq.q5'),
+          answer: this.$t('contact.faq.a5')
         }
       ]
     }
@@ -297,25 +313,25 @@ export default {
       this.errors = {}
       
       if (!this.form.name.trim()) {
-        this.errors.name = 'الاسم مطلوب'
+        this.errors.name = this.$t('validation.required')
       } else if (this.form.name.trim().length < 3) {
-        this.errors.name = 'الاسم يجب أن يكون 3 أحرف على الأقل'
+        this.errors.name = this.$t('validation.minLength', { min: 3 })
       }
       
       if (!this.form.email.trim()) {
-        this.errors.email = 'البريد الإلكتروني مطلوب'
+        this.errors.email = this.$t('validation.required')
       } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.form.email)) {
-        this.errors.email = 'البريد الإلكتروني غير صحيح'
+        this.errors.email = this.$t('validation.email')
       }
       
       if (!this.form.subject) {
-        this.errors.subject = 'نوع الاستفسار مطلوب'
+        this.errors.subject = this.$t('validation.required')
       }
       
       if (!this.form.message.trim()) {
-        this.errors.message = 'الرسالة مطلوبة'
+        this.errors.message = this.$t('validation.required')
       } else if (this.form.message.trim().length < 10) {
-        this.errors.message = 'الرسالة يجب أن تكون 10 أحرف على الأقل'
+        this.errors.message = this.$t('validation.minLength', { min: 10 })
       }
       
       return Object.keys(this.errors).length === 0
@@ -341,12 +357,13 @@ export default {
           id: Date.now(),
           ...this.form,
           timestamp: new Date().toISOString(),
-          status: 'جديدة'
+          status: 'new',
+          locale: this.$i18n.locale
         }
         messages.push(newMessage)
         localStorage.setItem('contactMessages', JSON.stringify(messages))
         
-        this.successMessage = 'تم إرسال رسالتك بنجاح! سنتواصل معك قريباً.'
+        this.successMessage = this.$t('contact.successMessage')
         
         // Reset form
         this.form = {
@@ -358,7 +375,7 @@ export default {
         }
         
       } catch (error) {
-        this.errorMessage = 'حدث خطأ أثناء إرسال الرسالة. يرجى المحاولة مرة أخرى.'
+        this.errorMessage = this.$t('contact.errorMessage')
       } finally {
         this.isSubmitting = false
       }
@@ -376,7 +393,7 @@ export default {
   align-items: center;
   justify-content: center;
   color: white;
-  margin-left: 1rem;
+  margin-inline-end: 1rem;
   font-size: 1.2rem;
 }
 
@@ -418,7 +435,7 @@ export default {
 }
 
 .social-link.twitter {
-  background: #1da1f2;
+  background: #000000;
 }
 
 .social-link.instagram {
@@ -442,5 +459,11 @@ export default {
 
 .accordion-button:focus {
   box-shadow: none;
+}
+
+/* RTL/LTR adjustments */
+[dir="rtl"] .contact-icon {
+  margin-inline-end: 0;
+  margin-inline-start: 1rem;
 }
 </style>

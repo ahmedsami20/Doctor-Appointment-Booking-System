@@ -5,13 +5,13 @@
         <div class="form-container">
           <div class="text-center mb-4">
             <i class="fas fa-user-md text-primary" style="font-size: 3rem;"></i>
-            <h3 class="mt-3">دخول الأطباء</h3>
-            <p class="text-muted">سجل دخولك للوصول إلى لوحة التحكم</p>
+            <h3 class="mt-3">{{ $t('doctorLogin.title') }}</h3>
+            <p class="text-muted">{{ $t('doctorLogin.subtitle') }}</p>
           </div>
           
           <form @submit.prevent="login">
             <div class="form-group mb-3">
-              <label class="form-label">البريد الإلكتروني *</label>
+              <label class="form-label">{{ $t('common.email') }} *</label>
               <div class="input-group">
                 <span class="input-group-text">
                   <i class="fas fa-envelope"></i>
@@ -31,7 +31,7 @@
             </div>
             
             <div class="form-group mb-3">
-              <label class="form-label">كلمة المرور *</label>
+              <label class="form-label">{{ $t('doctorLogin.password') }} *</label>
               <div class="input-group">
                 <span class="input-group-text">
                   <i class="fas fa-lock"></i>
@@ -60,7 +60,7 @@
             <div class="form-check mb-3">
               <input class="form-check-input" type="checkbox" v-model="form.remember" id="remember">
               <label class="form-check-label" for="remember">
-                تذكرني
+                {{ $t('doctorLogin.rememberMe') }}
               </label>
             </div>
             
@@ -76,28 +76,28 @@
               :disabled="isLoading"
             >
               <span v-if="isLoading">
-                <i class="fas fa-spinner fa-spin me-2"></i>جاري تسجيل الدخول...
+                <i class="fas fa-spinner fa-spin me-2"></i>{{ $t('doctorLogin.loggingIn') }}
               </span>
               <span v-else>
-                <i class="fas fa-sign-in-alt me-2"></i>تسجيل الدخول
+                <i class="fas fa-sign-in-alt me-2"></i>{{ $t('doctorLogin.login') }}
               </span>
             </button>
             
             <div class="text-center">
               <a href="#" class="text-decoration-none" @click="showForgotPassword = true">
-                نسيت كلمة المرور؟
+                {{ $t('doctorLogin.forgotPassword') }}
               </a>
             </div>
           </form>
           
           <!-- Demo Credentials -->
           <div class="mt-4 p-3 bg-light rounded">
-            <h6 class="text-muted mb-2">بيانات تجريبية للدخول:</h6>
+            <h6 class="text-muted mb-2">{{ $t('doctorLogin.demoCredentials') }}</h6>
             <div class="row">
               <div class="col-12 mb-2">
                 <small class="text-muted">
-                  <strong>البريد الإلكتروني:</strong> doctor@eyadaty.com<br>
-                  <strong>كلمة المرور:</strong> doctor123
+                  <strong>{{ $t('common.email') }}:</strong> doctor@eyadaty.com<br>
+                  <strong>{{ $t('doctorLogin.password') }}:</strong> doctor123
                 </small>
               </div>
             </div>
@@ -106,7 +106,7 @@
               class="btn btn-outline-primary btn-sm"
               @click="fillDemoCredentials"
             >
-              استخدام البيانات التجريبية
+              {{ $t('doctorLogin.useDemoCredentials') }}
             </button>
           </div>
         </div>
@@ -118,13 +118,13 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">استعادة كلمة المرور</h5>
+            <h5 class="modal-title">{{ $t('doctorLogin.resetPassword.title') }}</h5>
             <button type="button" class="btn-close" @click="showForgotPassword = false"></button>
           </div>
           <div class="modal-body">
-            <p>أدخل بريدك الإلكتروني وسنرسل لك رابط لاستعادة كلمة المرور</p>
+            <p>{{ $t('doctorLogin.resetPassword.message') }}</p>
             <div class="form-group">
-              <label class="form-label">البريد الإلكتروني</label>
+              <label class="form-label">{{ $t('common.email') }}</label>
               <input 
                 type="email" 
                 class="form-control" 
@@ -139,10 +139,10 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" @click="showForgotPassword = false">
-              إلغاء
+              {{ $t('common.cancel') }}
             </button>
             <button type="button" class="btn btn-primary" @click="resetPassword">
-              <i class="fas fa-paper-plane me-2"></i>إرسال
+              <i class="fas fa-paper-plane me-2"></i>{{ $t('doctorLogin.resetPassword.send') }}
             </button>
           </div>
         </div>
@@ -182,15 +182,15 @@ export default {
       this.errors = {}
       
       if (!this.form.email.trim()) {
-        this.errors.email = 'البريد الإلكتروني مطلوب'
+        this.errors.email = this.$t('validation.required')
       } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.form.email)) {
-        this.errors.email = 'البريد الإلكتروني غير صحيح'
+        this.errors.email = this.$t('validation.email')
       }
       
       if (!this.form.password) {
-        this.errors.password = 'كلمة المرور مطلوبة'
+        this.errors.password = this.$t('validation.required')
       } else if (this.form.password.length < 6) {
-        this.errors.password = 'كلمة المرور يجب أن تكون 6 أحرف على الأقل'
+        this.errors.password = this.$t('validation.minLength', { min: 6 })
       }
       
       return Object.keys(this.errors).length === 0
@@ -214,7 +214,7 @@ export default {
           // Create doctor session
           const doctorData = {
             id: 1,
-            name: 'د. أحمد محمد علي',
+            name: this.$i18n.locale === 'ar' ? 'د. أحمد محمد علي' : 'Dr. Ahmed Mohamed Ali',
             email: 'doctor@eyadaty.com',
             specialty: 'طب عام',
             loginTime: new Date().toISOString()
@@ -225,11 +225,11 @@ export default {
           // Redirect to dashboard
           this.$router.push('/doctor-dashboard')
         } else {
-          this.errorMessage = 'البريد الإلكتروني أو كلمة المرور غير صحيحة'
+          this.errorMessage = this.$t('validation.invalidCredentials')
         }
         
       } catch (error) {
-        this.errorMessage = 'حدث خطأ أثناء تسجيل الدخول. يرجى المحاولة مرة أخرى'
+        this.errorMessage = this.$t('contact.errorMessage')
       } finally {
         this.isLoading = false
       }
@@ -249,7 +249,7 @@ export default {
       // Simulate sending reset email
       await new Promise(resolve => setTimeout(resolve, 1000))
       
-      this.resetMessage = 'تم إرسال رابط استعادة كلمة المرور إلى بريدك الإلكتروني'
+      this.resetMessage = this.$t('doctorLogin.resetPassword.success')
       
       setTimeout(() => {
         this.showForgotPassword = false

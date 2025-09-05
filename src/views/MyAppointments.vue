@@ -3,8 +3,8 @@
     <div class="row">
       <div class="col-12">
         <div class="text-center text-white mb-4">
-          <h2><i class="fas fa-calendar-check me-2"></i>مواعيدي</h2>
-          <p>إدارة جميع مواعيدك الطبية</p>
+          <h2><i class="fas fa-calendar-check me-2"></i>{{ $t('myAppointments.title') }}</h2>
+          <p>{{ $t('myAppointments.subtitle') }}</p>
         </div>
 
         <!-- Filter Tabs -->
@@ -16,7 +16,7 @@
               :class="{ active: activeFilter === 'all' }"
               @click="setFilter('all')"
             >
-              الكل ({{ appointments.length }})
+              {{ $t('myAppointments.filters.all') }} ({{ appointments.length }})
             </button>
             <button 
               type="button" 
@@ -24,7 +24,7 @@
               :class="{ active: activeFilter === 'upcoming' }"
               @click="setFilter('upcoming')"
             >
-              القادمة ({{ upcomingAppointments.length }})
+              {{ $t('myAppointments.filters.upcoming') }} ({{ upcomingAppointments.length }})
             </button>
             <button 
               type="button" 
@@ -32,7 +32,7 @@
               :class="{ active: activeFilter === 'past' }"
               @click="setFilter('past')"
             >
-              السابقة ({{ pastAppointments.length }})
+              {{ $t('myAppointments.filters.past') }} ({{ pastAppointments.length }})
             </button>
           </div>
         </div>
@@ -40,10 +40,10 @@
         <!-- No Appointments -->
         <div v-if="appointments.length === 0" class="text-center text-white py-5">
           <i class="fas fa-calendar-times fa-4x mb-3 opacity-50"></i>
-          <h4>لا توجد مواعيد</h4>
-          <p>لم تقم بحجز أي موعد بعد</p>
+          <h4>{{ $t('myAppointments.noAppointments.title') }}</h4>
+          <p>{{ $t('myAppointments.noAppointments.message') }}</p>
           <router-link to="/doctors" class="btn btn-primary btn-lg">
-            <i class="fas fa-plus me-2"></i>احجز موعد جديد
+            <i class="fas fa-plus me-2"></i>{{ $t('myAppointments.noAppointments.bookNew') }}
           </router-link>
         </div>
 
@@ -64,6 +64,7 @@
                         :alt="appointment.doctorName" 
                         class="doctor-img w-100"
                         style="height: 80px; object-fit: cover;"
+                        @error="handleImageError"
                       >
                     </div>
                     <div class="col-9">
@@ -78,12 +79,12 @@
                             'bg-secondary': appointment.status === 'مكتمل'
                           }"
                         >
-                          {{ appointment.status }}
+                          {{ getStatusTranslation(appointment.status) }}
                         </span>
                       </div>
                       
                       <p class="text-muted mb-2">
-                        <span class="specialty-badge small">{{ appointment.doctorSpecialty }}</span>
+                        <span class="specialty-badge small">{{ getSpecialtyTranslation(appointment.doctorSpecialty) }}</span>
                       </p>
                       
                       <div class="appointment-details">
@@ -97,7 +98,7 @@
                         </p>
                         <p class="mb-1">
                           <i class="fas fa-hashtag text-info me-2"></i>
-                          رقم الحجز: {{ appointment.bookingId }}
+                          {{ $t('myAppointments.bookingId') }}: {{ appointment.bookingId }}
                         </p>
                         
                         <div v-if="appointment.notes" class="mt-2">
@@ -115,7 +116,7 @@
                           @click="showCancelModal(appointment)"
                           class="btn btn-danger btn-sm me-2"
                         >
-                          <i class="fas fa-times me-1"></i>إلغاء
+                          <i class="fas fa-times me-1"></i>{{ $t('myAppointments.cancelAppointment') }}
                         </button>
                         
                         <button 
@@ -123,14 +124,14 @@
                           @click="rescheduleAppointment(appointment)"
                           class="btn btn-warning btn-sm me-2"
                         >
-                          <i class="fas fa-edit me-1"></i>تعديل
+                          <i class="fas fa-edit me-1"></i>{{ $t('myAppointments.reschedule') }}
                         </button>
                         
                         <button 
                           @click="viewDetails(appointment)"
                           class="btn btn-info btn-sm"
                         >
-                          <i class="fas fa-eye me-1"></i>التفاصيل
+                          <i class="fas fa-eye me-1"></i>{{ $t('myAppointments.viewDetails') }}
                         </button>
                       </div>
                     </div>
@@ -148,35 +149,35 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">تأكيد الإلغاء</h5>
+            <h5 class="modal-title">{{ $t('myAppointments.cancelConfirm.title') }}</h5>
             <button type="button" class="btn-close" @click="closeCancelModal"></button>
           </div>
           <div class="modal-body">
             <div class="alert alert-warning">
               <i class="fas fa-exclamation-triangle me-2"></i>
-              هل أنت متأكد من إلغاء هذا الموعد؟
+              {{ $t('myAppointments.cancelConfirm.message') }}
             </div>
             <div v-if="appointmentToCancel">
-              <p><strong>الطبيب:</strong> {{ appointmentToCancel.doctorName }}</p>
-              <p><strong>التاريخ:</strong> {{ formatDate(appointmentToCancel.date) }}</p>
-              <p><strong>الوقت:</strong> {{ appointmentToCancel.time }}</p>
+              <p><strong>{{ $t('booking.doctor') }}:</strong> {{ appointmentToCancel.doctorName }}</p>
+              <p><strong>{{ $t('common.date') }}:</strong> {{ formatDate(appointmentToCancel.date) }}</p>
+              <p><strong>{{ $t('common.time') }}:</strong> {{ appointmentToCancel.time }}</p>
             </div>
             <div class="form-group mt-3">
-              <label class="form-label">سبب الإلغاء (اختياري)</label>
+              <label class="form-label">{{ $t('myAppointments.cancelConfirm.reason') }}</label>
               <textarea 
                 class="form-control" 
                 v-model="cancelReason"
                 rows="3"
-                placeholder="أدخل سبب الإلغاء..."
+                :placeholder="$t('myAppointments.cancelConfirm.reasonPlaceholder')"
               ></textarea>
             </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" @click="closeCancelModal">
-              إلغاء العملية
+              {{ $t('myAppointments.cancelConfirm.cancelAction') }}
             </button>
             <button type="button" class="btn btn-danger" @click="confirmCancel">
-              <i class="fas fa-times me-2"></i>إلغاء الموعد
+              <i class="fas fa-times me-2"></i>{{ $t('myAppointments.cancelConfirm.confirmCancel') }}
             </button>
           </div>
         </div>
@@ -188,7 +189,7 @@
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">تفاصيل الموعد</h5>
+            <h5 class="modal-title">{{ $t('myAppointments.appointmentDetails') }}</h5>
             <button type="button" class="btn-close" @click="closeDetailsModal"></button>
           </div>
           <div class="modal-body" v-if="selectedAppointment">
@@ -198,39 +199,40 @@
                   :src="selectedAppointment.doctorImage" 
                   :alt="selectedAppointment.doctorName" 
                   class="doctor-img mb-3"
+                  @error="handleImageError"
                 >
               </div>
               <div class="col-md-8">
                 <h4>{{ selectedAppointment.doctorName }}</h4>
-                <p><span class="specialty-badge">{{ selectedAppointment.doctorSpecialty }}</span></p>
+                <p><span class="specialty-badge">{{ getSpecialtyTranslation(selectedAppointment.doctorSpecialty) }}</span></p>
                 
                 <table class="table table-borderless">
                   <tr>
-                    <td><strong>رقم الحجز:</strong></td>
+                    <td><strong>{{ $t('myAppointments.bookingId') }}:</strong></td>
                     <td>{{ selectedAppointment.bookingId }}</td>
                   </tr>
                   <tr>
-                    <td><strong>اسم المريض:</strong></td>
+                    <td><strong>{{ $t('myAppointments.patientName') }}:</strong></td>
                     <td>{{ selectedAppointment.patientName }}</td>
                   </tr>
                   <tr>
-                    <td><strong>رقم الهاتف:</strong></td>
+                    <td><strong>{{ $t('common.phone') }}:</strong></td>
                     <td>{{ selectedAppointment.phone }}</td>
                   </tr>
                   <tr>
-                    <td><strong>البريد الإلكتروني:</strong></td>
+                    <td><strong>{{ $t('common.email') }}:</strong></td>
                     <td>{{ selectedAppointment.email }}</td>
                   </tr>
                   <tr>
-                    <td><strong>التاريخ:</strong></td>
+                    <td><strong>{{ $t('common.date') }}:</strong></td>
                     <td>{{ formatDate(selectedAppointment.date) }}</td>
                   </tr>
                   <tr>
-                    <td><strong>الوقت:</strong></td>
+                    <td><strong>{{ $t('common.time') }}:</strong></td>
                     <td>{{ selectedAppointment.time }}</td>
                   </tr>
                   <tr>
-                    <td><strong>الحالة:</strong></td>
+                    <td><strong>{{ $t('common.status') }}:</strong></td>
                     <td>
                       <span 
                         class="badge"
@@ -241,18 +243,18 @@
                           'bg-secondary': selectedAppointment.status === 'مكتمل'
                         }"
                       >
-                        {{ selectedAppointment.status }}
+                        {{ getStatusTranslation(selectedAppointment.status) }}
                       </span>
                     </td>
                   </tr>
                   <tr>
-                    <td><strong>تاريخ الحجز:</strong></td>
+                    <td><strong>{{ $t('myAppointments.createdAt') }}:</strong></td>
                     <td>{{ formatDateTime(selectedAppointment.createdAt) }}</td>
                   </tr>
                 </table>
                 
                 <div v-if="selectedAppointment.notes" class="mt-3">
-                  <strong>ملاحظات إضافية:</strong>
+                  <strong>{{ $t('myAppointments.additionalNotes') }}:</strong>
                   <p class="bg-light p-3 rounded mt-2">{{ selectedAppointment.notes }}</p>
                 </div>
               </div>
@@ -260,7 +262,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" @click="closeDetailsModal">
-              إغلاق
+              {{ $t('common.close') }}
             </button>
           </div>
         </div>
@@ -270,8 +272,19 @@
 </template>
 
 <script>
+import { useLanguage } from '@/composables/useLanguage'
+
 export default {
   name: 'MyAppointments',
+  setup() {
+    const { formatDate, formatDateTime, getSpecialtyTranslation, getStatusTranslation } = useLanguage()
+    return {
+      formatDate,
+      formatDateTime,
+      getSpecialtyTranslation,
+      getStatusTranslation
+    }
+  },
   data() {
     return {
       appointments: [],
@@ -376,24 +389,10 @@ export default {
       this.showDetailsModal = false
       this.selectedAppointment = null
     },
-    formatDate(dateString) {
-      const options = { 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric',
-        weekday: 'long'
-      }
-      return new Date(dateString).toLocaleDateString('ar-EG', options)
-    },
-    formatDateTime(dateString) {
-      const options = { 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
-      }
-      return new Date(dateString).toLocaleDateString('ar-EG', options)
+    handleImageError(event) {
+      // Set fallback image
+      event.target.src = 'https://via.placeholder.com/200x200/4A90E2/FFFFFF?text=Doctor'
+      event.target.alt = 'Doctor placeholder image'
     }
   }
 }

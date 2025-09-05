@@ -12,6 +12,66 @@ body {
   transition: all 0.3s ease;
 }
 
+/* RTL/LTR Support */
+[dir="ltr"] {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+[dir="rtl"] {
+  font-family: 'Cairo', sans-serif;
+}
+
+[dir="ltr"] .me-2,
+[dir="ltr"] .me-1 {
+  margin-right: 0.25rem !important;
+  margin-left: 0 !important;
+}
+
+[dir="ltr"] .ms-1,
+[dir="ltr"] .ms-2 {
+  margin-left: 0.25rem !important;
+  margin-right: 0 !important;
+}
+
+[dir="rtl"] .me-2,
+[dir="rtl"] .me-1 {
+  margin-left: 0.25rem !important;
+  margin-right: 0 !important;
+}
+
+[dir="rtl"] .ms-1,
+[dir="rtl"] .ms-2 {
+  margin-right: 0.25rem !important;
+  margin-left: 0 !important;
+}
+
+/* Language Toggle */
+.theme-toggle {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.theme-toggle small {
+  font-size: 0.7rem;
+  font-weight: bold;
+}
+
 .light-mode {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   min-height: 100vh;
@@ -48,7 +108,7 @@ body {
 
 /* Header */
 .header {
-  background: rgba(255, 255, 255, 0.1);
+  background:#6537ef;
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   position: sticky;

@@ -1,34 +1,30 @@
 export default {
-  // Header
+  // Navigation
   nav: {
     home: 'Home',
     doctors: 'Doctors',
     myAppointments: 'My Appointments',
     contact: 'Contact',
     doctorLogin: 'Doctor Login',
-    logo: 'MediCare'
+    logout: 'Logout'
   },
-
-
-  export : {
-  common: {
-    darkMode: 'Dark Mode',
-    lightMode: 'Light Mode'
-  },
-  // باقي الترجمات
-},
-
 
   // Common
   common: {
     search: 'Search',
-    submit: 'Submit',
+    filter: 'Filter',
+    all: 'All',
+    next: 'Next',
+    previous: 'Previous',
+    close: 'Close',
     cancel: 'Cancel',
+    confirm: 'Confirm',
     save: 'Save',
     edit: 'Edit',
     delete: 'Delete',
-    close: 'Close',
+    view: 'View',
     loading: 'Loading...',
+    submit: 'Submit',
     name: 'Name',
     email: 'Email',
     phone: 'Phone',
@@ -36,26 +32,19 @@ export default {
     time: 'Time',
     status: 'Status',
     actions: 'Actions',
-    details: 'Details',
-    back: 'Back',
-    next: 'Next',
-    previous: 'Previous',
-    all: 'All',
-    yes: 'Yes',
-    no: 'No',
-    optional: 'Optional',
-    required: 'Required'
+    notes: 'Notes',
+    required: 'Required',
+    optional: 'Optional'
   },
 
   // Home Page
   home: {
-    title: 'Welcome to MediCare',
+    welcome: 'Welcome to My Clinic',
     subtitle: 'Book your appointment with the best doctors in Egypt easily',
     searchPlaceholder: 'Search for doctor or specialty...',
-    popularSpecialties: 'Popular Specialties',
     features: {
-      fastBooking: {
-        title: 'Fast Booking',
+      quickBooking: {
+        title: 'Quick Booking',
         description: 'Book your appointment in seconds'
       },
       certifiedDoctors: {
@@ -64,49 +53,53 @@ export default {
       },
       easyToUse: {
         title: 'Easy to Use',
-        description: 'Simple interface compatible with all devices'
+        description: 'User-friendly and mobile-responsive interface'
       }
     },
+    popularSpecialties: 'Most Popular Specialties',
     stats: {
-      doctors: 'Registered Doctors',
+      doctors: 'Registered Doctor',
       appointments: 'Appointments Booked',
-      patients: 'Satisfied Patients',
-      specialties: 'Medical Specialties'
+      patients: 'Satisfied Patient',
+      specialties: 'Medical Specialty'
     }
   },
 
   // Doctors Page
   doctors: {
-    title: 'Doctors List',
+    title: 'Doctors',
     searchPlaceholder: 'Search for doctor...',
     resultsFound: 'Found {count} doctors',
-    noResults: 'No Results',
-    noResultsDesc: 'Try searching with different keywords or choose a different specialty',
+    noResults: {
+      title: 'No Results Found',
+      message: 'Try searching with different keywords or select a different specialty'
+    },
     bookAppointment: 'Book Appointment',
-    experience: 'Years Experience',
-    availableToday: 'Available Today',
-    currency: 'EGP',
-    specialties: {
-      general: 'General Medicine',
-      pediatrics: 'Pediatrics',
-      dentistry: 'Dentistry',
-      dermatology: 'Dermatology',
-      ophthalmology: 'Ophthalmology',
-      cardiology: 'Cardiology',
-      orthopedics: 'Orthopedics',
-      gynecology: 'Gynecology'
-    }
+    experience: 'years experience',
+    availableToday: 'Available slots today:',
+    egp: 'EGP'
+  },
+
+  // Specialties
+  specialties: {
+    'طب عام': 'General Medicine',
+    'أطفال': 'Pediatrics',
+    'أسنان': 'Dentistry',
+    'جلدية': 'Dermatology',
+    'عيون': 'Ophthalmology',
+    'قلب': 'Cardiology',
+    'عظام': 'Orthopedics',
+    'نساء وولادة': 'Obstetrics & Gynecology'
   },
 
   // Booking Page
   booking: {
     title: 'Book Appointment',
-    patientName: 'Full Name',
-    phone: 'Phone Number',
-    email: 'Email Address',
+    patientInfo: 'Patient Information',
+    fullName: 'Full Name',
     appointmentDate: 'Appointment Date',
     appointmentTime: 'Appointment Time',
-    notes: 'Additional Notes',
+    additionalNotes: 'Additional Notes',
     notesPlaceholder: 'Write any notes or symptoms you want to tell the doctor...',
     bookingSummary: 'Booking Summary',
     doctor: 'Doctor',
@@ -115,21 +108,10 @@ export default {
     confirmBooking: 'Confirm Booking',
     booking: 'Booking...',
     success: {
-      title: 'Booking Successful',
+      title: 'Booking Successful!',
       message: 'Your appointment has been booked successfully!',
       bookingNumber: 'Booking Number',
       confirmationMessage: 'A confirmation message will be sent to your registered phone and email'
-    },
-    errors: {
-      nameRequired: 'Name is required',
-      nameMinLength: 'Name must be at least 3 characters',
-      phoneRequired: 'Phone number is required',
-      phoneInvalid: 'Invalid phone number',
-      emailRequired: 'Email is required',
-      emailInvalid: 'Invalid email address',
-      dateRequired: 'Appointment date is required',
-      dateFuture: 'Please select a future date',
-      timeRequired: 'Appointment time is required'
     }
   },
 
@@ -137,101 +119,88 @@ export default {
   myAppointments: {
     title: 'My Appointments',
     subtitle: 'Manage all your medical appointments',
-    tabs: {
+    filters: {
       all: 'All',
       upcoming: 'Upcoming',
       past: 'Past'
     },
-    noAppointments: 'No Appointments',
-    noAppointmentsDesc: 'You haven\'t booked any appointments yet',
-    bookNewAppointment: 'Book New Appointment',
-    bookingNumber: 'Booking Number',
+    noAppointments: {
+      title: 'No Appointments',
+      message: 'You haven\'t booked any appointments yet',
+      bookNew: 'Book New Appointment'
+    },
+    bookingId: 'Booking ID',
     cancelAppointment: 'Cancel',
-    rescheduleAppointment: 'Reschedule',
+    reschedule: 'Reschedule',
     viewDetails: 'Details',
     cancelConfirm: {
       title: 'Confirm Cancellation',
       message: 'Are you sure you want to cancel this appointment?',
       reason: 'Cancellation Reason (Optional)',
       reasonPlaceholder: 'Enter cancellation reason...',
-      cancelOperation: 'Cancel Operation',
-      confirmCancel: 'Cancel Appointment'
+      confirmCancel: 'Cancel Appointment',
+      cancelAction: 'Cancel Action'
     },
-    appointmentDetails: {
-      title: 'Appointment Details',
-      patientInfo: 'Patient Information',
-      appointmentInfo: 'Appointment Information',
-      bookingDate: 'Booking Date',
-      additionalNotes: 'Additional Notes'
-    },
-    status: {
-      confirmed: 'Confirmed',
-      pending: 'Pending',
-      cancelled: 'Cancelled',
-      completed: 'Completed',
-      noShow: 'No Show'
-    }
+    appointmentDetails: 'Appointment Details',
+    patientName: 'Patient Name',
+    createdAt: 'Booking Date',
+    additionalNotes: 'Additional Notes'
   },
 
   // Contact Page
   contact: {
     title: 'Contact Us',
-    subtitle: 'We are here to help you, contact us anytime',
+    subtitle: 'We\'re here to help you, contact us anytime',
     contactInfo: 'Contact Information',
     address: 'Address',
-    addressValue: 'Tahrir Street, Downtown\nCairo, Egypt',
-    phone: 'Phone',
-    email: 'Email',
+    addressText: 'Tahrir Street, Downtown\nCairo, Egypt',
     workingHours: 'Working Hours',
-    workingHoursValue: 'Sunday - Thursday: 8:00 AM - 8:00 PM\nFriday - Saturday: 10:00 AM - 6:00 PM',
+    workingHoursText: 'Sunday - Thursday: 8:00 AM - 8:00 PM\nFriday - Saturday: 10:00 AM - 6:00 PM',
     followUs: 'Follow Us',
-    sendMessage: 'Send us a Message',
-    fullName: 'Full Name',
-    subject: 'Subject',
-    message: 'Message',
-    messagePlaceholder: 'Write your message here...',
-    sendingMessage: 'Sending...',
-    sendMessageBtn: 'Send Message',
-    subjects: {
+    sendMessage: 'Send us a message',
+    inquiryType: 'Inquiry Type',
+    inquiryTypes: {
       booking: 'Booking Issue',
       technical: 'Technical Issue',
       complaint: 'Complaint',
       suggestion: 'Suggestion',
       general: 'General Inquiry'
     },
+    message: 'Message',
+    messagePlaceholder: 'Write your message here...',
+    sending: 'Sending...',
+    sendMessage: 'Send Message',
     successMessage: 'Your message has been sent successfully! We will contact you soon.',
     errorMessage: 'An error occurred while sending the message. Please try again.',
     faq: {
       title: 'Frequently Asked Questions',
       q1: 'How can I book an appointment?',
-      a1: 'You can book an appointment by going to the "Doctors" page and selecting the appropriate doctor, then clicking "Book Appointment" and filling in the required information.',
+      a1: 'You can book an appointment by going to the "Doctors" page and selecting the appropriate doctor, then clicking "Book Appointment" and filling out the required information.',
       q2: 'Can I cancel or reschedule my appointment?',
-      a2: 'Yes, you can cancel or reschedule your appointment through the "My Appointments" page, provided that the appointment is at least 24 hours in advance.',
+      a2: 'Yes, you can cancel or reschedule your appointment through the "My Appointments" page, provided the appointment is at least 24 hours away.',
       q3: 'What are the consultation fees?',
       a3: 'Consultation fees vary by specialty and doctor. You can see the fees on each doctor\'s details page before booking.',
       q4: 'Can I pay online?',
-      a4: 'Currently, payment is made at the clinic, but soon we will provide online payment feature for more convenience.',
+      a4: 'Currently payment is made at the clinic, but we will soon provide online payment for more convenience.',
       q5: 'What if I\'m late for my appointment?',
-      a5: 'In case of delay, please call the clinic immediately. The appointment may be rescheduled according to the doctor\'s schedule and availability.'
+      a5: 'In case of delay, please call the clinic immediately. The appointment may be rescheduled based on the doctor\'s schedule and availability.'
     }
   },
 
   // Doctor Login
   doctorLogin: {
     title: 'Doctor Login',
-    subtitle: 'Sign in to access your dashboard',
-    email: 'Email Address',
+    subtitle: 'Login to access your dashboard',
     password: 'Password',
     rememberMe: 'Remember Me',
-    login: 'Sign In',
-    loggingIn: 'Signing In...',
+    login: 'Login',
+    loggingIn: 'Logging in...',
     forgotPassword: 'Forgot Password?',
-    demoCredentials: 'Demo Credentials',
+    demoCredentials: 'Demo credentials for login:',
     useDemoCredentials: 'Use Demo Credentials',
-    invalidCredentials: 'Invalid email or password',
     resetPassword: {
       title: 'Reset Password',
-      message: 'Enter your email address and we will send you a password reset link',
+      message: 'Enter your email and we\'ll send you a reset link',
       send: 'Send',
       success: 'Password reset link has been sent to your email'
     }
@@ -240,8 +209,7 @@ export default {
   // Doctor Dashboard
   doctorDashboard: {
     title: 'Doctor Dashboard',
-    welcome: 'Welcome {name}',
-    logout: 'Sign Out',
+    welcome: 'Welcome',
     stats: {
       todayAppointments: 'Today\'s Appointments',
       upcomingAppointments: 'Upcoming Appointments',
@@ -254,24 +222,32 @@ export default {
       history: 'Patient History',
       profile: 'Profile'
     },
-    noAppointmentsToday: 'No appointments today',
+    todayAppointments: 'Today\'s Appointments',
+    noTodayAppointments: 'No appointments today',
+    upcomingAppointments: 'Upcoming Appointments',
     noUpcomingAppointments: 'No upcoming appointments',
-    patientDetails: 'Patient Details',
+    patientHistory: 'Patient History',
+    patientName: 'Patient Name',
+    viewDetails: 'View Details',
     markComplete: 'Mark Complete',
     markNoShow: 'Mark No Show',
+    profile: 'Profile',
+    updateProfile: 'Update Profile',
+    saveChanges: 'Save Changes',
+    profileUpdated: 'Changes saved successfully',
+    patientDetails: 'Patient Details',
     patientInfo: 'Patient Information',
     appointmentInfo: 'Appointment Information',
-    patientNotes: 'Patient Notes',
-    profile: {
-      title: 'Profile',
-      name: 'Name',
-      specialty: 'Specialty',
-      phone: 'Phone',
-      email: 'Email',
-      address: 'Address',
-      saveChanges: 'Save Changes',
-      changesSaved: 'Changes saved successfully'
-    }
+    patientNotes: 'Patient Notes'
+  },
+
+  // Status
+  status: {
+    مؤكد: 'Confirmed',
+    'في الانتظار': 'Waiting',
+    ملغي: 'Cancelled',
+    مكتمل: 'Completed',
+    'لم يحضر': 'No Show'
   },
 
   // Footer
@@ -279,13 +255,35 @@ export default {
     description: 'The most advanced medical appointment booking system in Egypt',
     quickLinks: 'Quick Links',
     contactUs: 'Contact Us',
-    rights: 'All rights reserved'
+    rightsReserved: 'All rights reserved.'
   },
 
-  // Notifications
-  notifications: {
-    appointmentReminder: 'Appointment Reminder',
-    upcomingAppointment: 'You have an appointment with {doctorName} on {date} at {time}',
+  // Validation Messages
+  validation: {
+    required: 'This field is required',
+    email: 'Invalid email address',
+    phone: 'Invalid phone number',
+    minLength: 'Must be at least {min} characters',
+    futureDate: 'Must select a future date',
+    invalidCredentials: 'Invalid email or password'
+  },
+
+  // Theme
+  theme: {
+    light: 'Light Mode',
+    dark: 'Dark Mode'
+  },
+
+  // Language
+  language: {
+    arabic: 'العربية',
+    english: 'English'
+  },
+
+  // Reminders
+  reminder: {
+    title: 'Appointment Reminder',
+    message: 'You have an appointment with {doctorName} on {date} at {time}',
     ok: 'OK'
   }
 }
